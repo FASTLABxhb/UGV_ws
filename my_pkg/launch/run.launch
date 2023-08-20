@@ -1,0 +1,53 @@
+<launch>
+
+  <!-- autonomous_exploration_development_environment -->
+  <arg name="cameraOffsetZ" default="0"/>
+  <arg name="vehicleX" default="0"/>
+  <arg name="vehicleY" default="0"/>
+  <arg name="checkTerrainConn" default="false"/>
+ 
+  <!--<include file="$(find terrain_analysis)/launch/terrain_analysis.launch" />-->
+
+  <!--<include file="$(find terrain_analysis_ext)/launch/terrain_analysis_ext.launch" >
+    <arg name="checkTerrainConn" value="$(arg checkTerrainConn)"/>
+  </include>-->
+
+  <include file="$(find loam_interface)/launch/loam_interface.launch" />
+    <node pkg="my_pkg" type="my_pkg_node" name="my_pkg_node" output="screen" required="true">
+      <!-- <param name="limit_l_max" value="0.03" /> -->
+      <!-- <param name="limit_a_max" value="0.01" /> -->
+      <!-- <param name="limit_l_min" value="0.2" /> -->
+      <!-- <param name="limit_a_min" value="0.2" /> -->
+    </node>
+
+  <include file="$(find sensor_scan_generation)/launch/sensor_scan_generation.launch" />
+
+  <include file="$(find local_planner)/launch/local_planner.launch" >
+    <arg name="cameraOffsetZ" value="$(arg cameraOffsetZ)"/>
+    <arg name="goalX" value="$(arg vehicleX)"/>
+    <arg name="goalY" value="$(arg vehicleY)"/>
+  </include>
+
+
+
+  <!--- lio_sam -->
+  <!--- Parameters -->
+  <rosparam file="$(find lio_sam)/config/params.yaml" command="load" />
+
+  <!--- LOAM -->
+  <include file="$(find lio_sam)/launch/include/module_loam.launch" />
+
+  <!--- Robot State TF -->
+  <!-- <include file="$(find lio_sam)/launch/include/module_robot_state_publisher.launch" /> -->
+
+  <!--- Run Navsat -->
+  <!--include file="$(find lio_sam)/launch/include/module_navsat.launch" /-->
+
+
+
+
+  <!--- Run Rvi
+  <include file="$(find lio_sam)/launch/include/module_rviz.launch" />
+  <node launch-prefix="nice" pkg="rviz" type="rviz" name="rvizGA" args="-d $(find vehicle_simulator)/rviz/vehicle_simulator.rviz" respawn="true"/> -->
+
+</launch>

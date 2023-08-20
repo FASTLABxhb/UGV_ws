@@ -1,0 +1,14 @@
+<launch>
+
+  <node pkg="loam_interface" type="loamInterface" name="loamInterface" output="screen" required="true">
+    <param name="stateEstimationTopic" type="string" value="/lio_sam/mapping/odometry" />
+    <!--param name="registeredScanTopic" type="string" value="lio_sam/mapping/sensor_cloud_registered_raw" /-->
+    <param name="registeredScanTopic" type="string" value="/lio_sam/mapping/cloud_registered_raw" />
+    <param name="flipStateEstimation" type="bool" value="false" />
+    <param name="flipRegisteredScan" type="bool" value="false" />
+    <param name="sendTF" type="bool" value="true" />
+    <param name="reverseTF" type="bool" value="false" />
+
+  </node>
+
+</launch>

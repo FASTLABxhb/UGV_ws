@@ -1,0 +1,7 @@
+<launch>
+
+   <!--- Run Rviz-->
+  <include file="$(find lio_sam)/launch/include/module_rviz.launch" />
+  <node launch-prefix="nice" pkg="rviz" type="rviz" name="rvizGA" args="-d $(find vehicle_simulator)/rviz/vehicle_simulator.rviz" respawn="true"/>
+
+</launch>
